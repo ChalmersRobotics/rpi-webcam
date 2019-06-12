@@ -75,8 +75,9 @@ Theese lines simply make the RPi update every sunday starting with `apt update` 
 
 ## Additional Links
 For more information and/or troubleshooting, here are some links that may help.
-* https://github.com/jacksonliam/mjpg-streamer
-* https://www.sigmdel.ca/michel/ha/rpi/streaming_en.html
-* https://www.collaborizm.com/thread/SyFenrp6l
-* https://www.dexterindustries.com/howto/run-a-program-on-your-raspberry-pi-at-startup/
-* https://desertbot.io/blog/how-to-stream-the-picamera
+* [jacksonliam/mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer)
+* [Secure Webcam streaming with MJPG-Streamer on a Raspberry Pi](https://www.sigmdel.ca/michel/ha/rpi/streaming_en.html)
+* [Install mjpg-streamer on Raspberry Pi for video streaming!](https://www.collaborizm.com/thread/SyFenrp6l)
+* [Five Ways To Run a Program On Your Raspberry Pi At Startup](https://www.dexterindustries.com/howto/run-a-program-on-your-raspberry-pi-at-startup/)
+* [How to stream the picamera to your browser](https://desertbot.io/blog/how-to-stream-the-picamera)
+* [Automatically update and upgrade Raspbian](https://hjerpbakk.com/blog/2018/06/18/automatically-update-and-upgrade-raspbian)
