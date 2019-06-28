@@ -46,31 +46,31 @@ mjpg_streamer -o "output_http.so" -i "input_raspicam.so --width 1640 --height 12
 
 The stream should now be accessible by visiting `http://<IP>:8080/?action=stream`. If you want snapshot jpeg images, visit `http://<IP>:8080/?action=snapshot` instead. Press Ctrl-C to stop the stream when you are done.
 
-If you want the stream to start at boot, edit the file `/etc/rc.local` and add the above command, followed by an ampersand (`&`) right before the `exit 0` line. The line should look like:
+If you want the stream to start at boot there multiple options. One way is to edit the file `/etc/rc.local` and add the above command, followed by an ampersand (`&`) right before the `exit 0` line. The line should look like:
 ```bash
 mjpg_streamer -o "output_http.so" -i "input_raspicam.so --width 1640 --height 1232 -fps 15 -quality 10" &
 ```
 
-Reboot to make sure it works:
+Another way is to use `crontab` and use the `@reboot` command. Edit the root crontab file using `sudo crontab -e` and add the line
+```bash
+@reboot /usr/local/bin/mjpg_streamer -o "output_http.so" -i "input_raspicam.so --width 1640 --height 1232 -fps 15 -quality 10" &
+```
+Notice that the full path to the `mjpg_streamer` executable has to be specified and can be found by for example using the command `type mjpg_streamer`.
+
+
+Now reboot to make sure it works:
 ```bash
 sudo reboot
 ```
 
-## Automatic update
-When mounting several Raspberry Pi's (such as at CRF), one does not want to have to manually keep them updated. Here is where `crontab` comes into play. Using the following cron jobs, the RPi will automatically check for, and update, packages and also perform a system reboot.
+## Automatic updates
+When mounting several Raspberry Pi's (such as at CRF), one does not want to have to manually keep them updated. Here is where `crontab` comes into play. Using the following cron job, the RPi will automatically check for, and update, packages and also perform a system reboot.
 
-Simply edit your *crontab* file using 
+Simply edit your crontab file as before (`sudo crontab -e`) and add the following line to it
 ```bash
-sudo crontab -e
+0 2 * * 0 sudo apt -y update && sudo apt -y dist-upgrade && sleep 1800 && sudo /sbin/reboot
 ```
-
-and add the following lines to it
-```bash
-0 2 * * 0 sudo apt -y update
-0 3 * * 0 sudo apt -y dist-upgrade
-0 5 * * 0 sudo reboot
-```
-Theese lines simply make the RPi update every sunday starting with `apt update` at 02:00, `apt dist-upgrade` at 03:00 and lastly a reboot at 05:00. The `-y` flag make sure the commands run without any user interaction. See the [crontab quick refence](https://www.adminschoice.com/crontab-quick-reference) for a more in-depth explanation about the definition of cron jobs.
+Theese lines simply make the RPi update every sunday at 02:00 starting with `apt update` and then following with an `apt dist-upgrade` , a delay of 30 minutes and lastly a reboot. The `-y` flag make sure the commands run without any user interaction. See the [crontab quick refence](https://www.adminschoice.com/crontab-quick-reference) for a more in-depth explanation about the definition of cron jobs.
 
 
 ## Additional Links
